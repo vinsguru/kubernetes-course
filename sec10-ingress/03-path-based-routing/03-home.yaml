@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-app
+spec:
+  selector:
+    matchLabels:
+      app: home-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: home-app
+    spec:
+      terminationGracePeriodSeconds: 1
+      containers:
+      - name: home
+        image: vinsdocker/k8s-ingress-home
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: home-service
+spec:
+  selector:
+    app: home-app
+  ports:
+  - port: 80
+    targetPort: 80

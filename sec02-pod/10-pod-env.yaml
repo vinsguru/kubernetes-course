@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  restartPolicy: Never
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    env:
+    - name: "request.timeout"
+      value: "10ms"
+    - name: "spring.profiles.active"
+      value: "dev"
+    args: 
+    - "env"

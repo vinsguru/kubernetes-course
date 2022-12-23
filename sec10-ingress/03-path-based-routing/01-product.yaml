@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-app
+spec:
+  selector:
+    matchLabels:
+      app: product-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: product-app
+    spec:
+      terminationGracePeriodSeconds: 1
+      containers:
+      - name: product
+        image: vinsdocker/k8s-ingress-product
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+spec:
+  selector:
+    app: product-app
+  ports:
+  - port: 80
+    targetPort: 80

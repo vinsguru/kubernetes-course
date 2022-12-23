@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-db
+spec:
+  selector:
+    matchLabels:
+      app: mongo-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mongo-db
+    spec:
+      containers:
+      - name: mongo-db
+        image: mongo:4.4-focal
+        envFrom:
+        - secretRef:
+            name: mongo-secret
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: mongo-data-volume
+          mountPath: /docker-entrypoint-initdb.d
+      volumes:
+      - name: mongo-data-volume
+        configMap:
+          name: mongo-init-js       
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+spec:
+  selector:
+    app: mongo-db
+  ports:
+  - port: 27017
+    targetPort: 27017

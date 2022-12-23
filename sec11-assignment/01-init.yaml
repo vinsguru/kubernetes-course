@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: init-js
+data:
+  job.js: |
+    // create db
+    db = db.getSiblingDB('job');
+
+    // create user
+    db.createUser({
+        user: "job_user",
+        pwd: "job_password",
+        roles:[
+            {
+                role: "readWrite",
+                db: "job"
+            }
+        ]
+    });
+
+    // create collection
+    db.createCollection('job');
+
+    // create docs
+    db.job.insertMany([
+        {
+            description: "senior java dev",
+            company: "amazon",
+            skills: [ "java", "spring", "docker" ],
+            salary: 100000,
+            isRemote: false
+        },
+        {
+            description: "junior java dev",
+            company: "apple",
+            skills: [ "java" ],
+            salary: 50000,
+            isRemote: false
+        },
+        {
+            description: "scrum master",
+            company: "google",
+            skills: [ "agile", "jira" ],
+            salary: 60000,
+            isRemote: true
+        },
+        {
+            description: "director of engg",
+            company: "microsoft",
+            skills: [ "java", "jira", "project" ],
+            salary: 150000,
+            isRemote: true
+        }
+    ]);
+  candidate.js: |
+    // create db
+    db = db.getSiblingDB('candidate');
+
+    // create user
+    db.createUser({
+        user: 'candidate_user',
+        pwd: 'candidate_password',
+        roles:[
+            {
+                role: 'readWrite',
+                db: 'candidate'
+            }
+        ]
+    });
+
+    // create collection
+    db.createCollection('candidate');
+
+    // create docs
+    db.candidate.insertMany([
+        {
+            _id: '1',
+            name: 'sam',
+            skills: [ 'java', 'spring' ]
+        },
+        {
+            _id: '2',
+            name: 'jake',
+            skills: [ 'docker' ]
+        },
+        {
+            _id: '3',
+            name: 'mike',
+            skills: [ 'jira' ]
+        }
+    ]);  

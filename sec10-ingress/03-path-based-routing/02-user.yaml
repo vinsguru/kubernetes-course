@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-app
+spec:
+  selector:
+    matchLabels:
+      app: user-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: user-app
+    spec:
+      terminationGracePeriodSeconds: 1
+      containers:
+      - name: user
+        image: vinsdocker/k8s-ingress-user
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+spec:
+  selector:
+    app: user-app
+  ports:
+  - port: 80
+    targetPort: 80

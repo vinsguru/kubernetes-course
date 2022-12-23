@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-assignment
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: assignment
+    image: vinsdocker/k8s-pod-assignment
+    env:
+    - name: NUMBER
+      value: "5"
+    args:
+    - "MY_ARG"

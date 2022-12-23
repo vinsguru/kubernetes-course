@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  restartPolicy: Never
+  containers:
+  - name: entrypoint
+    image: vinsdocker/k8s-entrypoint
+    command: 
+    - "date"
